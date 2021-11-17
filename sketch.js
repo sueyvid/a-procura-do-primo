@@ -60,8 +60,7 @@ function preload() {
   Prog = loadImage('assets/Sueyvid.jpg');
   obj = loadImage('assets/moeda_objeto.png');
   castelo = loadImage('assets/castelo_zona_segura.png');
-  zona_segura = loadImage('assets/zona_segura.png');
-  coracao = loadImage('assests/coracao.png');
+  coracao = loadImage('assets/coracao.png');
   bau = loadImage('assets/bau.png');
   trofeu = loadImage('assets/trofeu.png');
   Pers_down = loadImage('assets/Warrior_down.png');
