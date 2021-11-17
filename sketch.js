@@ -56,50 +56,14 @@ var tDist = 10;
 var moeda_som;
 
 function preload() {
-<<<<<<< HEAD
-  Educ = loadImage('Rummenigge.JPG');
-  Prog = loadImage('Sueyvid.jpg');
-  obj = loadImage('moeda_objeto.png');
-  castelo = loadImage('castelo_zona_segura.png');
-  zona_segura = loadImage('zona_segura.png');
-  coracao = loadImage('coracao.png');
-  bau = loadImage('bau.png');
-  trofeu = loadImage('trofeu.png');
-  Pers_down = loadImage('Warrior_down.png');
-  Pers_down[0] = loadImage('Warrior_down_1.png');
-  Pers_down[1] = loadImage('Warrior_down.png');
-  Pers_down[2] = loadImage('Warrior_down_2.png');
-  Pers_down[3] = loadImage('Warrior_down.png');
-  Pers_left = loadImage('Warrior_left.png');
-  Pers_left[0] = loadImage('Warrior_left_1.png');
-  Pers_left[1] = loadImage('Warrior_left.png');
-  Pers_left[2] = loadImage('Warrior_left_2.png');
-  Pers_left[3] = loadImage('Warrior_left.png');
-  Pers_right = loadImage('Warrior_right.png');
-  Pers_right[0] = loadImage('Warrior_right_1.png');
-  Pers_right[1] = loadImage('Warrior_right.png');
-  Pers_right[2] = loadImage('Warrior_right_2.png');
-  Pers_right[3] = loadImage('Warrior_right.png');
-  Pers_up = loadImage('Warrior_up.png');
-  Pers_up[0] = loadImage('Warrior_up_1.png');
-  Pers_up[1] = loadImage('Warrior_up.png');
-  Pers_up[2] = loadImage('Warrior_up_2.png');
-  Pers_up[3] = loadImage('Warrior_up.png');
-  coin[0] = loadImage('goldCoin1.png');
-  coin[1] = loadImage('goldCoin2.png');
-  coin[2] = loadImage('goldCoin3.png');
-  coin[3] = loadImage('goldCoin4.png');
-  coin[4] = loadImage('goldCoin5.png');
-  coin[5] = loadImage('goldCoin6.png');
-  coin[6] = loadImage('goldCoin7.png');
-  coin[7] = loadImage('goldCoin8.png');
-  coin[8] = loadImage('goldCoin9.png');
-=======
   Educ = loadImage('assets/Rummenigge.JPG');
   Prog = loadImage('assets/Sueyvid.jpg');
   obj = loadImage('assets/moeda_objeto.png');
   castelo = loadImage('assets/castelo_zona_segura.png');
   zona_segura = loadImage('assets/zona_segura.png');
+  coracao = loadImage('assests/coracao.png');
+  bau = loadImage('assets/bau.png');
+  trofeu = loadImage('assets/trofeu.png');
   Pers_down = loadImage('assets/Warrior_down.png');
   Pers_down[0] = loadImage('assets/Warrior_down_1.png');
   Pers_down[1] = loadImage('assets/Warrior_down.png');
@@ -129,7 +93,6 @@ function preload() {
   coin[6] = loadImage('assets/goldCoin7.png');
   coin[7] = loadImage('assets/goldCoin8.png');
   coin[8] = loadImage('assets/goldCoin9.png');
->>>>>>> parent of 3923647 (Update sketch.js)
 }
 
 function setup() {
