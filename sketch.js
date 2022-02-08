@@ -47,7 +47,8 @@ var xZona = 100, yZona = 100;
 var widthZona = 200, heightZona = 180;
 
 var rodadaTempo = (600+400)/(2*rObj*5);
-var rodadaMax = 10;
+var rodadaMax = 1; //10
+var vida = 1; //3
 
 var aleat = 0;
 var pontostotais = 0;
@@ -58,7 +59,6 @@ var rodada = 0;
 var yCong = 500;
 var congratulação;
 
-var vida = 3;
 var tMaximo = 11;
 var tDist = 9;
 var moeda_som;
@@ -183,6 +183,7 @@ function menu() {
   textAlign(LEFT);
   text(">", width/6-h1, posicao*height/9+height/18*5+h1/3);
   text("Iniciar", width/6, height/18*7+h1/3);
+  /*
   text("Dificuldade", width/6, height/18*9+h1/3);
   text("Configurações", width/6, height/18*11+h1/3);
   
@@ -199,9 +200,10 @@ function menu() {
   if(dific == 3){
     text("Modo: Difícil", width/2, height/6*5-h3/3);
   }
+  */
 }
 
-function dificuldade() {
+/*function dificuldade() {
   fill('black');
   textSize(h1);
   
@@ -213,9 +215,9 @@ function dificuldade() {
   text("Fácil", width/6, height/18*7+h1/3);
   text("Médio", width/6, height/18*9+h1/3);
   text("Difícil", width/6, height/18*11+h1/3);
-}
+}*/
 
-function configuracoes() {
+/*function configuracoes() {
   fill('black');
   textSize(h1);
   
@@ -244,7 +246,7 @@ function configuracoes() {
     fill('gray');
     triangle(width/3*2,height/18*7,width/3*2-10, height/18*7-10,width/3*2-10, height/18*7+10);
   }
-}
+}*/
 
 function selecionarfase() {
   fill('black');
@@ -304,7 +306,7 @@ function selecionarfase() {
   text("27",600,270);
 }
 
-function explicacao() {
+/*function explicacao() {
   background(150, 240, 200);
   fill('black');
   textSize(h1);
@@ -349,9 +351,9 @@ function explicacao() {
   if(pag_explic == 6){
     text("Um número é divisível por 2\nquando for PAR, e um número\né par quando seu último algarismo\nfor PAR, ou seja, {0, 2, 4, 6, 8}",width/2, height/18*7+h1/3);
   }
-}
+}*/
 
-function creditos() {
+/*function creditos() {
   background('black');
   fill('white');
   textSize(h1);
@@ -370,7 +372,7 @@ function creditos() {
     tela = 0;
     posicao = 1;
   }
-}
+}*/
 
 function acertou() {
   momento = tempo.toFixed(1);
@@ -414,14 +416,14 @@ function iguais() {
   yVida = -50;
 }
 
-function moeda() {
+/*function moeda() {
   time_moeda++;
   image(coin[cont_moeda%9],0,4,40,40);
   if(time_moeda>10){
     cont_moeda++;
     time_moeda = 0;
   }
-}
+}*/
 
 function zeradirecoes() {
   left = false;
@@ -438,7 +440,7 @@ function movimento() {
   }
 }
 
-function perdeuvida() {
+function paralisa() {
   time++;
   if(andando == true && time > 7){
     image(Pers_down,xPers-rPers,yPers-rPers,2*rPers,2*rPers);
@@ -457,11 +459,11 @@ function vidaaleatoria() {
     yVida = -50;
   }
   else if(porcent < probab && vida < 3){
-    posicaoaleatoriavida();
+    posicaovida();
   }
 }
 
-function posicaoaleatoriavida() {
+function posicaovida() {
   xVida = random(0+rObj,width-rObj);
   yVida = random(50+rObj,height-rObj);
 }
@@ -473,14 +475,84 @@ function baualeatorio() {
     yBau = -50;
   }
   else if(porcent < probab){
-    posicaoaleatoriabau();
+    posicaobau();
   }
 }
 
-function posicaoaleatoriabau() {
+function posicaobau() {
   xBau = random(0+rObj,width-rObj);
   yBau = random(50+rObj,height-rObj);
   valordobau = parseInt(random(1,tMaximo));
+}
+
+function aleatorio() {
+  xObj = random(0+rObj,width-rObj);
+  yObj = random(50+rObj,height-rObj);
+  tObj = parseInt(random(1,tMaximo));
+  
+  xObj2 = random(0+rObj,width-rObj);
+  yObj2 = random(50+rObj,height-rObj);
+  tObj2 = parseInt(random(1,tMaximo));
+  
+  xObj3 = random(0+rObj,width-rObj);
+  yObj3 = random(50+rObj,height-rObj);
+  tObj3 = parseInt(random(1,tMaximo));
+  
+  xObj4 = random(0+rObj,width-rObj);
+  yObj4 = random(50+rObj,height-rObj);
+  tObj4 = parseInt(random(1,tMaximo));
+  aleat = 0;
+}
+
+function pontuacao() {
+  fill('black');
+  textSize(h1);
+  textAlign(CENTER);
+  text("Pontuação", width/2, height/6+h1/2);
+  text(pontos, width/2, height/6+h1/2 + 2*h1);
+  
+  pontuacaominima = fase*dific*100*3;
+  if(pontos > pontuacaominima/3){
+    trof = 1;
+  }
+  if(pontos > pontuacaominima/1.5){
+    trof = 2;
+  }
+  if(pontos >= pontuacaominima){
+    trof = 3;
+  }
+  
+  fill(150, 240, 200, 100);
+  image(trofeu, width/2-90-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  image(trofeu, width/2-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  image(trofeu, width/2+90-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  rect(width/2-130, height/18*7+h1/3-40,260,80);
+  
+  if(trof >= 1){
+    image(trofeu, width/2-90-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  }
+  if(trof >= 2){
+    image(trofeu, width/2-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  }
+  if(trof >= 3){
+    image(trofeu, width/2+90-rObj, height/18*7+h1/3-rObj, 2*rObj, 2*rObj);
+  }
+  
+  fill('black');
+  textSize(h2);
+  textAlign(RIGHT);
+  text("Enter ->", width/6*5, height/6*5+h3);
+}
+
+function fimdejogo() {
+  fill('black');
+  textSize(h1);
+  textAlign(CENTER);
+  text("Fim de jogo", width/2, height/18*7+h1/3);
+  textSize(h2);
+  textAlign(RIGHT);
+  text("Enter ->", width/6*5, height/6*5+h3);
+  resetar();
 }
 
 function jogo() {
@@ -613,7 +685,7 @@ function jogo() {
   }
   
   //Variáveis de pontuação
-  moeda();
+  //moeda();
   textSize(h1);
   fill('black');
   textAlign(LEFT);
@@ -661,10 +733,10 @@ function jogo() {
   yfZona = heightZona+yZona+rObj;
   
   if(xBau >= xiZona && xBau <= xfZona && yBau >= yiZona && yBau <= yfZona){
-    posicaoaleatoriabau();
+    posicaobau();
   }
   if(xVida >= xiZona && xVida <= xfZona && yVida >= yiZona && yVida <= yfZona){
-    posicaoaleatoriavida();
+    posicaovida();
   }
   if(xObj >= xiZona && xObj <= xfZona && yObj >= yiZona && yObj <= yfZona){
     aleat = 1;
@@ -840,7 +912,7 @@ function jogo() {
     textSize(h2);
     fill('white');
     text("- "+(dific*100*fase),xPers,yPers+10-yCong);
-    perdeuvida();
+    paralisa();
   }
   if(tempo > 1.2){
     errado = false;
@@ -891,76 +963,6 @@ function jogo() {
   if(rodada == rodadaMax){
     tela = 11;
   }
-}
-
-function aleatorio() {
-  xObj = random(0+rObj,width-rObj);
-  yObj = random(50+rObj,height-rObj);
-  tObj = parseInt(random(1,tMaximo));
-  
-  xObj2 = random(0+rObj,width-rObj);
-  yObj2 = random(50+rObj,height-rObj);
-  tObj2 = parseInt(random(1,tMaximo));
-  
-  xObj3 = random(0+rObj,width-rObj);
-  yObj3 = random(50+rObj,height-rObj);
-  tObj3 = parseInt(random(1,tMaximo));
-  
-  xObj4 = random(0+rObj,width-rObj);
-  yObj4 = random(50+rObj,height-rObj);
-  tObj4 = parseInt(random(1,tMaximo));
-  aleat = 0;
-}
-
-function pontuacao() {
-  fill('black');
-  textSize(36);
-  textAlign(CENTER);
-  text("Pontuação",width/2,150);
-  text(pontos, width/2, 200);
-  
-  pontuacaominima = fase*dific*100*3;
-  if(pontos > pontuacaominima/3){
-    trof = 1;
-  }
-  if(pontos > pontuacaominima/1.5){
-    trof = 2;
-  }
-  if(pontos >= pontuacaominima){
-    trof = 3;
-  }
-  
-  fill(150, 240, 200, 100);
-  image(trofeu, width/2-90-rObj, 240-rObj, 2*rObj, 2*rObj);
-  image(trofeu, width/2-rObj, 250-rObj, 2*rObj, 2*rObj);
-  image(trofeu, width/2+90-rObj, 240-rObj, 2*rObj, 2*rObj);
-  rect(170,210,260,80);
-  
-  if(trof >= 1){
-    image(trofeu, width/2-90-rObj, 240-rObj, 2*rObj, 2*rObj);
-  }
-  if(trof >= 2){
-    image(trofeu, width/2-rObj, 250-rObj, 2*rObj, 2*rObj);
-  }
-  if(trof >= 3){
-    image(trofeu, width/2+90-rObj, 240-rObj, 2*rObj, 2*rObj);
-  }
-  
-  fill('black');
-  textSize(24);
-  textAlign(RIGHT);
-  text("Enter ->",580,380);
-}
-
-function fimdejogo() {
-  fill('black');
-  textSize(36);
-  textAlign(CENTER);
-  text("Fim de jogo",width/2,height/2);
-  textSize(24);
-  textAlign(RIGHT);
-  text("Enter ->",580,380);
-  resetar();
 }
 
 function resetar() {
