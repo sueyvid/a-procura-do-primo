@@ -1,5 +1,6 @@
 var posicao = 1;
-var tela = 0;
+var tela = "menu";
+var primo = [2,3,5,7,11,13,17,19,23,27];
 var dific = 1;
 var yCred = 0;
 var pag_explic = 1;
@@ -116,55 +117,56 @@ function setupjogo() {
 }
 
 function draw() {
-  if(tela == 0){
+  if(tela == "menu"){
     menu();
   }
-  if(tela == 1){
+  if(tela == "int_selecionarfase"){
     if(!aberto[1] && instruc == 0){
       explicacao();
     }
     else{
-      tela = 12;
+      tela = "selecionarfase";
     }
   }
-  if(tela == 2){
+  if(tela == "dificuldade"){
     dificuldade();
   }
-  if(tela == 3){
+  if(tela == "configuracoes"){
     configuracoes();
   }
-  if(tela == 4){
+  if(tela == "jogo"){
     jogo();
   }
-  if(tela == 6){
-    tela = 0;
+  if(tela == "int_menu"){
+    tela = "menu";
   }
-  if(tela == 7){
-    tela = 8;
+  if(tela == "int_fimdejogo"){
+    tela = "fimdejogo";
   }
-  if(tela == 8){
+  if(tela == "fimdejogo"){
     fimdejogo();
   }
-  if(tela == 9){
+  if(tela == "creditos"){
     creditos();
   }
-  if(tela == 10){
+  if(tela == "int_jogo"){
     setupjogo();
     instruc = 0;
-    tela = 4;
+    tela = "jogo";
   }
-  if(tela == 11){
+  if(tela == "pontuacao"){
     pontuacao();
   }
-  if(tela == 12){
+  if(tela == "selecionarfase"){
     selecionarfase();
   }
-  if(tela == 13){
+  if(tela == "explicacao"){
     explicacao();
   }
 }
 
 function menu() {
+  posicao = 1;
   background(150, 240, 200);
   textFont('Verdana');
   fill('black');
@@ -197,6 +199,7 @@ function menu() {
 }
 
 /*function dificuldade() {
+  posicao = dific;
   background(80, 240, 200);
   fill('black');
   textSize(h1);
@@ -212,6 +215,7 @@ function menu() {
 }*/
 
 /*function configuracoes() {
+  posicao = 1;
   background(80, 240, 200);
   fill('black');
   textSize(h1);
@@ -303,6 +307,7 @@ function selecionarfase() {
 }
 
 /*function explicacao() {
+  instruc = 1;
   background(150, 240, 200);
   fill('black');
   textSize(h1);
@@ -350,6 +355,7 @@ function selecionarfase() {
 }*/
 
 /*function creditos() {
+  yCred = h1;
   background('black');
   fill('white');
   textSize(h1);
@@ -365,7 +371,7 @@ function selecionarfase() {
   image(Educ,160,height+yCred+195);
   yCred--;
   if(yCred <= -height-340){
-    tela = 0;
+    tela = "menu";
     posicao = 1;
   }
 }*/
@@ -391,7 +397,7 @@ function errou() {
 
 function gameover() {
     pontostotais += pontos;
-    tela = 7;
+    tela = "int_fimdejogo";
     vida = 3;
     pontos = 0;
     rodada = 0;
@@ -959,11 +965,12 @@ function jogo() {
     momento = 0;
   }
   if(rodada == rodadaMax){
-    tela = 11;
+    tela = "pontuacao";
   }
 }
 
 function resetar() {
+  pontostotais += pontos;
   pontos = 0;
   tempo = 0;
   momento = 0;
@@ -984,19 +991,18 @@ function resetar() {
 
 function keyPressed() {
   if (key == "Escape"){
-    if(tela == 4){
-      tela = 11;
+    if(tela == "jogo"){
+      tela = "pontuacao";
     }
     else{
-      tela = 6;
+      tela = "int_menu";
       posicao = 1;
-      pontostotais += pontos;
       resetar();
     }
   }
   
   //Tela dificuldade
-  if(tela == 2){
+  if(tela == "dificuldade"){
     if(key == "ArrowDown" && posicao != 3){
       posicao++;
     }
@@ -1005,13 +1011,13 @@ function keyPressed() {
     }
     if (key == "Enter"){
       dific = posicao;
-      tela = 0;
+      tela = "menu";
       posicao = 1;
     }
   }
   
   //Tela configurações
-  else if(tela == 3){
+  else if(tela == "configuracoes"){
     if(key == "ArrowDown" && posicao != 3){
       posicao += 1;
     }
@@ -1020,49 +1026,51 @@ function keyPressed() {
     }
     if (key == "Enter"){
       if(posicao == 2){
-        yCred = h1;
-        tela = 9;
+        tela = "creditos";
       }
       if(posicao == 3){
-        instruc = 1;
-        tela = 13;
+        tela = "explicacao";
       }
     }
   }
   
   //Tela Menu
-  else if(tela == 0){
+  else if(tela == "menu"){
     if(key == "ArrowDown" && posicao != 3){
       posicao += 1;
     }
     if(key == "ArrowUp" && posicao != 1){
       posicao -= 1;
     }
-    if (key == "Enter" && posicao == 2){
-      tela = posicao;
-      posicao = dific;
-    }
-    else if(key == "Enter"){
-      tela = posicao;
-      posicao = 1;
+    if(key == "Enter"){
+      if(posicao == 1){
+        tela = "int_selecionarfase";
+      }
+      if(posicao == 2){
+        tela = "dificuldade";
+      }
+      if(posicao == 3){
+        tela = "configuracoes";
+      }
     }
   }
   
-  //No fim de jogo
-  else if(key == "Enter" && tela == 8){
-    tela = 0;
+  //Tela fim de jogo
+  else if(key == "Enter" && tela == "fimdejogo"){
+    tela = "menu";
   }
-  else if(key == "Enter" && tela == 11){
-    if(fase == aberto && rodada >= 10){
-      aberto += 1;
+  
+  //Tela pontuação
+  else if(key == "Enter" && tela == "pontuacao"){
+    if(rodada == rodadaMax){
+      aberto[fase-1] = true;
     }
-    pontostotais += pontos;
     resetar();
-    tela = 0;
+    tela = "menu";
   }
   
-  //Na seleção de fase
-  if(tela == 12){
+  //Tela seleção de fase
+  if(tela == "selecionarfase"){
     if(key == "ArrowRight" && aberto[fase] && fase <= 10){
       fase += 1;
     }
@@ -1075,69 +1083,31 @@ function keyPressed() {
     else if(key == "ArrowUp" && fase >= 6){
       fase -= 5;
     }
-    
-    else if(key == "Enter" && fase == 1){
-      tPers = 2;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 2){
-      tPers = 3;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 3){
-      tPers = 5;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 4){
-      tPers = 7;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 5){
-      tPers = 11;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 6){
-      tPers = 13;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 7){
-      tPers = 17;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 8){
-      tPers = 19;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 9){
-      tPers = 23;
-      tela = 10;
-    }
-    else if(key == "Enter" && fase == 10){
-      tPers = 27;
-      tela = 10;
+    else if(key == "Enter"){
+      tPers = primo[fase-1];
+      tela = "int_jogo";
     }
   }
   
   //configurações do som
-  if(tela == 3 && posicao == 1){
-    if(key == "ArrowLeft" && som){
+  if(tela == "configuracoes" && posicao == 1){
+    if(key == "ArrowLeft"){
       som = false;
     }
-    if(key == "ArrowRight" && !som){
+    if(key == "ArrowRight"){
       som = true;
     }
   }
   
   //Na explicação
-  else if(key == "Enter" && (tela == 1 || tela == 13) && pag_explic < 6){
+  else if(key == "Enter" && (tela == "int_selecionarfase" || tela == "explicacao") && pag_explic < 6){
     pag_explic++;
   }
-  else if(key == "Enter" && tela == 1 && pag_explic >= 6 && instruc == 0){
-    tela = 12;
+  else if(key == "Enter" && tela == "int_selecionarfase" && pag_explic >= 6 && instruc == 0){
+    tela = "selecionarfase";
   }
-  else if(key == "Enter" && tela == 13 && pag_explic >= 6 && instruc == 1){
-    tela = 0;
-    posicao = 1;
+  else if(key == "Enter" && tela == "explicacao" && pag_explic >= 6 && instruc == 1){
+    tela = "menu";
     resetar();
   }
 }
