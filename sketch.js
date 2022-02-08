@@ -117,7 +117,6 @@ function setupjogo() {
 
 function draw() {
   if(tela == 0){
-    background(150, 240, 200);
     menu();
   }
   if(tela == 1){
@@ -129,26 +128,21 @@ function draw() {
     }
   }
   if(tela == 2){
-    background(80, 240, 200);
     dificuldade();
   }
   if(tela == 3){
-    background(80, 240, 200);
     configuracoes();
   }
   if(tela == 4){
     jogo();
   }
   if(tela == 6){
-    setup();
     tela = 0;
   }
   if(tela == 7){
-    setup();
     tela = 8;
   }
   if(tela == 8){
-    background(150, 240, 200);
     fimdejogo();
   }
   if(tela == 9){
@@ -160,11 +154,9 @@ function draw() {
     tela = 4;
   }
   if(tela == 11){
-    background(150, 240, 200);
     pontuacao();
   }
   if(tela == 12){
-    background(150, 240, 200);
     selecionarfase();
   }
   if(tela == 13){
@@ -173,6 +165,7 @@ function draw() {
 }
 
 function menu() {
+  background(150, 240, 200);
   textFont('Verdana');
   fill('black');
   textSize(h1);
@@ -204,6 +197,7 @@ function menu() {
 }
 
 /*function dificuldade() {
+  background(80, 240, 200);
   fill('black');
   textSize(h1);
   
@@ -218,6 +212,7 @@ function menu() {
 }*/
 
 /*function configuracoes() {
+  background(80, 240, 200);
   fill('black');
   textSize(h1);
   
@@ -249,6 +244,7 @@ function menu() {
 }*/
 
 function selecionarfase() {
+  background(150, 240, 200);
   fill('black');
   textSize(h1);
   textAlign(CENTER);
@@ -505,6 +501,7 @@ function aleatorio() {
 }
 
 function pontuacao() {
+  background(150, 240, 200);
   fill('black');
   textSize(h1);
   textAlign(CENTER);
@@ -545,6 +542,7 @@ function pontuacao() {
 }
 
 function fimdejogo() {
+  background(150, 240, 200);
   fill('black');
   textSize(h1);
   textAlign(CENTER);
