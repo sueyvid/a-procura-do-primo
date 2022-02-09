@@ -1,72 +1,79 @@
-var posicao = 1;
-var tela = "int_jogo";
-var primo = [2,3,5,7,11,13,17,19,23,27];
-var dific = 1;
-var yCred = 0;
-var pag_explic = 1;
-var instruc = 0;
+var xiZona, yiZona;
+var xfZona, yfZona;
+var xZona = 100, yZona = 100;
+var widthZona = 200, heightZona = 180;
+
+var xPers = 20, yPers = 20, tPers = 2;
+var rObj = 25, rPers = 30;
+var xObj = 0, yObj = 0, tObj = 0;
+var xObj2 = 0, yObj2 = 0, tObj2 = 0;
+var xObj3 = 0, yObj3 = 0, tObj3 = 0;
+var xObj4 = 0, yObj4 = 0, tObj4 = 0;
+var xBau = -50, yBau = -50, valorBau = 0;
+var xVida = -50, yVida = -50;
+
+var tMaximo = 11;
+var tDist = 9;
+
+var up, down, left, right;
+var direcao = "down";
+
+var pontos = 0;
+var vida = 3; //3
+var rodadaTempo = 5; //em função do tamanho da tela
+var tempo = rodadaTempo;
+
+var momento = 0;
+var rodada = 0;
+
+var andando = false;
+var errado = false;
+
 var som = true;
+var pegoubau = false;
+var yCong = 500;
 
-var porcent = 0;
-var probab = 5;
+var rodadaMax = 10; //10
+var dific = 1;
 
-var xiZona;
-var xfZona;
-var yiZona;
-var yfZona;
+var xInimigo = 500;
+var yInimigo = 500;
 
 var h1 = 32;
 var h2 = 24;
 var h3 = 15;
+
+var posicao = 1;
+var tela = "int_jogo";
+var primo = [2,3,5,7,11,13,17,19,23,27];
+var yCred = 0;
+var pag_explic = 1;
+var instruc = 0;
+
+var porcent = 0;
+var probab = 5;
 
 var aberto = [1];
 var fase = 1;
 
 var pontuacaominima = 0;
 var trof = 0;
-var pegoubau = false;
-var valordobau = 0;
-var xBau = -50, yBau = -50;
-var xVida = -50, yVida = -50;
+
 var opacidade = 0;
 var time_moeda = 0;
 var cont_moeda = 0;
 var coin = [ ]
 var cont = 0;
 var time = 0;
-var andando = false;
-var xObj = 0, yObj = 0, tObj = 0;
-var xObj2 = 0, yObj2 = 0, tObj2 = 0;
-var xObj3 = 0, yObj3 = 0, tObj3 = 0;
-var xObj4 = 0, yObj4 = 0, tObj4 = 0;
-var rObj = 25, rPers = 30;
-var xZona = 100, yZona = 100;
-var widthZona = 200, heightZona = 180;
 
-var rodadaTempo = (600+400)/(2*rObj*5);
-var rodadaMax = 10; //10
-
-var momento = 0;
-var pontos = 0;
-var rodada = 0;
-var tempo = 0;
-
-var xPers = 20, yPers = 20, tPers = 2;
-var up, down, left, right;
-var direcao = "down";
-var vida = 3; //3
-var errado = false;
-
-var yCong = 500;
-
-var aleat = 0;
 var pontostotais = 0;
 var congratulação;
 
-var tMaximo = 11;
-var tDist = 9;
+
 var moeda_som;
 
+/********** funções iniciais **********/
+/******************************/
 function preload() {
   Educ = loadImage('assets/Rummenigge.JPG');
   Prog = loadImage('assets/Sueyvid.jpg');
@@ -167,8 +174,11 @@ function draw() {
     explicacao();
   }
 }
+/******************************/
 
-/*function menu() {
+/********** funções de telas **********/
+/******************************
+function menu() {
   background(150, 240, 200);
   textFont('Verdana');
   fill('black');
@@ -196,9 +206,9 @@ function draw() {
   if(dific == 3){
     text("Modo: Difícil", width/2, height/6*5-h3/3);
   }
-}*/
+}
 
-/*function dificuldade() {
+function dificuldade() {
   background(80, 240, 200);
   fill('black');
   textSize(h1);
@@ -211,9 +221,9 @@ function draw() {
   text("Fácil", width/6, height/18*7+h1/3);
   text("Médio", width/6, height/18*9+h1/3);
   text("Difícil", width/6, height/18*11+h1/3);
-}*/
+}
 
-/*function configuracoes() {
+function configuracoes() {
   background(80, 240, 200);
   fill('black');
   textSize(h1);
@@ -243,9 +253,9 @@ function draw() {
     fill('gray');
     triangle(width/3*2,height/18*7,width/3*2-10, height/18*7-10,width/3*2-10, height/18*7+10);
   }
-}*/
+}
 
-/*function selecionarfase() {
+function selecionarfase() {
   background(150, 240, 200);
   fill('black');
   textSize(h1);
@@ -302,9 +312,9 @@ function draw() {
   text("19",400,270);
   text("23",500,270);
   text("27",600,270);
-}*/
+}
 
-/*function explicacao() {
+function explicacao() {
   instruc = 1;
   background(150, 240, 200);
   fill('black');
@@ -350,9 +360,9 @@ function draw() {
   if(pag_explic == 6){
     text("Um número é divisível por 2\nquando for PAR, e um número\né par quando seu último algarismo\nfor PAR, ou seja, {0, 2, 4, 6, 8}",width/2, height/18*7+h1/3);
   }
-}*/
+}
 
-/*function creditos() {
+function creditos() {
   yCred = h1;
   background('black');
   fill('white');
@@ -372,17 +382,17 @@ function draw() {
     tela = "menu";
     posicao = 1;
   }
-}*/
+}
 
-/*function gameover() {
+function gameover() {
     pontostotais += pontos;
     tela = "int_fimdejogo";
     vida = 3;
     pontos = 0;
     rodada = 0;
-}*/
+}
 
-/*function pontuacao() {
+function pontuacao() {
   background(150, 240, 200);
   fill('black');
   textSize(h1);
@@ -421,9 +431,9 @@ function draw() {
   textSize(h2);
   textAlign(RIGHT);
   text("Enter ->", width/6*5, height/6*5+h3);
-}*/
+}
 
-/*function fimdejogo() {
+function fimdejogo() {
   background(150, 240, 200);
   fill('black');
   textSize(h1);
@@ -433,27 +443,11 @@ function draw() {
   textAlign(RIGHT);
   text("Enter ->", width/6*5, height/6*5+h3);
   resetar();
-}*/
+}
+******************************/
 
-/*function resetar() {
-  pontostotais += pontos;
-  pontos = 0;
-  tempo = 0;
-  momento = 0;
-  rodada = 0;
-  vida = 3;
-  pag_explic = 1;
-  instruc = 0;
-  yCong = 500;
-  direcao = "down";
-  andando = false;
-  errado = false;
-  pontuacaominima = 0;
-  trof = 0;
-  xVida = -50;
-  yVida = -50;
-}*/
-
+/********** funções extras **********/
+/******************************
 function moeda() {
   time_moeda++;
   image(coin[cont_moeda%9],0,4,40,40);
@@ -505,9 +499,134 @@ function baualeatorio() {
 function posicaobau() {
   xBau = random(0+rObj,width-rObj);
   yBau = random(50+rObj,height-rObj);
-  valordobau = parseInt(random(1,tMaximo));
+  valorBau = parseInt(random(1,tMaximo));
 }
 
+function valorMaximo() {
+  if(dific == 1){
+    tMaximo = 11*fase;
+  }
+  if(dific == 2){
+    tMaximo = 101*fase;
+  }
+  if(dific == 3){
+    tMaximo = 101*fase;
+  }  
+}
+
+function congratulacao() {
+  textSize(h1);
+  textAlign(RIGHT);
+  if(momento > 0 && momento <= 1.5){
+    fill(255,0,127,opacidade);
+  }
+  if(momento > 1.5 && momento <= 2.5){
+    fill(0,128,0,opacidade);
+  }
+  if(momento > 2.5 && momento < 4){
+    fill(255,255,0,opacidade);
+  }
+  if(yCong >= 0){
+    yCong += 30/60;
+  }
+  text(congratulação,width-20,yCong);  
+}
+
+function texto() {
+  if(tempo < 1.2 && momento == 0 && !errado){
+    textSize(h2);
+    fill('white');
+    textAlign(CENTER);
+    text("- "+(dific*10),xPers,yPers+10-yCong);
+  }
+  
+  if(tempo < 1.2){
+    if(momento > 0 && momento <= 1.5){
+      congratulação = "Perfeito";
+    }
+    if(momento > 1.5 && momento <= 2.5){
+      congratulação = "Ótimo";
+    }
+    if(momento > 2.5 && momento < 4){
+      congratulação = "Bom";
+    }
+  }
+  else{
+    congratulação = " ";
+  }
+  
+  if(tempo < 1.2 && momento != 0 && !errado){
+    if(pegoubau){
+      textSize(h2);
+      fill('white');
+      text("+ "+parseInt((5-momento) * valorBau * dific * fase),xPers,yPers+10-yCong);
+    }
+    else{
+      textSize(h2);
+      fill('white');
+      text("+ "+parseInt((5-momento) * dific*10 * fase),xPers,yPers+10-yCong);
+    }
+  }
+  
+  if(tempo < 1.2 && momento == 0 && errado){
+    textSize(h2);
+    fill('white');
+    text("- "+(dific*100*fase),xPers,yPers+10-yCong);
+    paralisa();
+  }
+  if(tempo < 1.2 && rodada >= 3 && momento == 0){
+    textSize(h2);
+    fill('black');
+    if(!errado){
+      text("Seja mais rápido",width/2,height/6*5);
+    }
+    if(errado){
+      text("Cuidado!",width/2,height/6*5);
+    }
+  }
+  
+  if(tempo <= 3 && rodada < 3){
+    fill('black');
+    textSize(h2);
+    textAlign(CENTER);
+    text("Mova-se até o seu múltiplo",width/2, height/6*5);
+  }
+  if(tempo < 2 && momento != 0){
+    textSize(h1);
+    fill(0,0,0,opacidade);
+    textAlign(CENTER);
+    text("Rodada "+rodada,width/2,height/6*5-h1);
+  }
+  opacidade -= 3;
+  if(tempo == 0){
+    opacidade = 250;
+  }
+}
+
+function numeroEscudo() {
+  textSize(12);
+  textAlign(CENTER);
+  fill('white');
+  if(direcao == "down"){
+    text(tPers,xPers-21,yPers+17);
+  }
+  if(direcao == "left"){
+    text(tPers,xPers+6,yPers-8);
+  }
+  if(direcao == "right"){
+    text(tPers,xPers-6,yPers-8);
+  }
+  if(direcao == "up"){
+    text(tPers,xPers,yPers-8);
+  }
+  if(rodada == 0){
+    momento = 0;
+  }
+}
+******************************/
+
+/********** funçõoes do jogo **********/
+/******************************/
 function movimento() {
   time++;
   if(time > 5){
@@ -526,13 +645,14 @@ function desenhaObjetos() {
   rect(xZona+widthZona-23-h1,yZona+60,h1,h1);
   
   fill('red');
+  textAlign(CENTER);
   textSize(h2);
   text(tPers,xZona+39,yZona+85);
   text(tPers,xZona+widthZona-39,yZona+85);
   
   image(coracao, xVida-1.2*rObj, yVida-1.2*rObj, 2.4*rObj, 2.4*rObj);
   fill('white');
-  text("+ "+valordobau, xBau-1.2*rObj, yBau-1.2*rObj);
+  text("+ "+valorBau, xBau-1.2*rObj, yBau-1.2*rObj);
   image(bau, xBau-1.2*rObj, yBau-1.2*rObj, 2.4*rObj, 2.4*rObj);
   
   if(dific >= 1){
@@ -644,6 +764,7 @@ function atributos() {
     circle(width/2+15,35,20,20);
   }
   if(vida < 1){
+    resetar();
     //gameover();
   }
   
@@ -651,9 +772,14 @@ function atributos() {
   textSize(h1);
   textAlign(RIGHT);
   if(andando == true){
-    tempo += 1/60;
+    tempo -= 1/60;
   }
   text(tempo.toFixed(1) + " s",width-20,36);
+  
+  fill('black');
+  textSize(h1);
+  textAlign(RIGHT);
+  text(rodada+" / ∞", width-20, height-20);
 }
 
 function testeZona() {
@@ -719,12 +845,15 @@ function testeDistancia() {
   }
 }
 
-function contato() {
+function colisao() {
+  if(tempo <= 0){
+    recomeco();
+  }
   if(!(xPers >= xZona && xPers <= widthZona+xZona && yPers >= yZona && yPers <= heightZona+yZona)){
     //Bau aleatório
     if(dist(xPers,yPers,xBau,yBau) < rPers){
       momento = tempo.toFixed(1);
-      pontos = parseInt(pontos + (5-momento) * valordobau);
+      pontos = parseInt(pontos + (5-momento) * valorBau);
       iguais();
       errado = false;
       pegoubau = true;
@@ -782,9 +911,21 @@ function contato() {
   }
 }
 
+function recomeco() {
+  if(pontos-100 > 0){
+    pontos -= 100;
+  }
+  else{
+    pontos = 0;
+  }
+  iguais();
+  momento = 0;
+  //congratulação = "";
+}
+
 function acertou() {
   momento = tempo.toFixed(1);
-  pontos = parseInt(pontos + (5-momento) * dific*10 * fase);
+  pontos = parseInt(pontos + 100*(momento));
   rodada++;
   if(som){
     moeda_som.play(true);
@@ -792,7 +933,12 @@ function acertou() {
 }
 
 function errou() {
-  pontos = pontos - (dific*100*fase);
+  if(pontos-1000 > 0){
+    pontos -= 1000;
+  }
+  else{
+    pontos = 0;
+  }
   momento = 0;
   vida -= 1;
   errado = true;
@@ -807,12 +953,30 @@ function iguais() {
   zeradirecoes();
   andando = false;
   direcao = "down";
-  tempo = 0;
+  tempo = rodadaTempo;
   yCong = 50;
-  aleat = 1;
   aleatorio();
   //vidaaleatoria();
   //baualeatorio();
+  xVida = -50;
+  yVida = -50;
+}
+
+function resetar() {
+  pontostotais += pontos;
+  pontos = 0;
+  tempo = rodadaTempo;
+  momento = 0;
+  rodada = 0;
+  vida = 3;
+  pag_explic = 1;
+  instruc = 0;
+  yCong = 500;
+  direcao = "down";
+  andando = false;
+  errado = false;
+  pontuacaominima = 0;
+  trof = 0;
   xVida = -50;
   yVida = -50;
 }
@@ -848,167 +1012,44 @@ function jogo() {
   fill('#7CFC00');
   rect(0,0,width,50);
   
-  /*
-  if(dific == 1){
-    tMaximo = 11*fase;
-  }
-  if(dific == 2){
-    tMaximo = 101*fase;
-  }
-  if(dific == 3){
-    tMaximo = 101*fase;
-  }
-  */
-  
-  //Objetos
+  //valorMaximo();
   desenhaObjetos();
-  
-  //controle do personagem
   controlePersonagem();
-  
-  //Variáveis de pontuação
   atributos();
   //moeda();
   
-  /*
-  textAlign(RIGHT);
-  if(momento > 0 && momento <= 1.5){
-    fill(255,0,127,opacidade);
-  }
-  if(momento > 1.5 && momento <= 2.5){
-    fill(0,128,0,opacidade);
-  }
-  if(momento > 2.5 && momento < 4){
-    fill(255,255,0,opacidade);
-  }
-  if(yCong >= 0){
-    yCong += 30/60;
-  }
-  text(congratulação,width-20,yCong);
-  */
-  
-  //Teste da zona segura para objetos
   testeZona();
-  
-  //Teste de primo
   testePrimo();
-  
-  //Recomeço
-  if(tempo >= rodadaTempo){
-    iguais();
-    momento = 0;
-    //congratulação = "";
-    pontos = pontos-(dific*10);
-  }
-  
-  /*
-  if(tempo < 1.2 && momento == 0 && !errado){
-    textSize(h2);
-    fill('white');
-    textAlign(CENTER);
-    text("- "+(dific*10),xPers,yPers+10-yCong);
-  }
-  */
-  
-  //Teste da zona segura para personagem
-  contato();
-  
-  //Teste de distância entre os objetos
+  //texto();
+  colisao();
   testeDistancia();
   
-  //Congratulação
-  /*
-  if(tempo < 1.2){
-    if(momento > 0 && momento <= 1.5){
-      congratulação = "Perfeito";
+  fill('red');
+  circle(xInimigo,yInimigo,2*rObj,2*rObj);
+  if(tempo != rodadaTempo){
+    if(dist(xPers, yPers, xInimigo, yInimigo) > 0){
+      if(xInimigo > xPers){
+        xInimigo-=2;
+      }
+      if(yInimigo > yPers){
+        yInimigo--;
+      }
+      if(xInimigo < xPers){
+        xInimigo+=2;
+      }
+      if(yInimigo < yPers){
+        yInimigo++;
+      }
     }
-    if(momento > 1.5 && momento <= 2.5){
-      congratulação = "Ótimo";
-    }
-    if(momento > 2.5 && momento < 4){
-      congratulação = "Bom";
-    }
-  }
-  else{
-    congratulação = " ";
-  }
-  */
-  
-  //Instruções e informações
-  /*
-  if(tempo < 1.2 && momento != 0 && !errado && pegoubau){
-    textSize(h2);
-    fill('white');
-    text("+ "+parseInt((5-momento) * valordobau * dific * fase),xPers,yPers+10-yCong);
-  }
-  */
-  /*
-  else if(tempo < 1.2 && momento != 0 && !errado && !pegoubau){
-    textSize(h2);
-    fill('white');
-    text("+ "+parseInt((5-momento) * dific*10 * fase),xPers,yPers+10-yCong);
-  }
-  */
-  /*
-  if(tempo < 1.2 && momento == 0 && errado){
-    textSize(h2);
-    fill('white');
-    text("- "+(dific*100*fase),xPers,yPers+10-yCong);
-    paralisa();
-  }
-  */
-  /*
-  if(tempo < 1.2 && rodada >= 3 && momento == 0){
-    textSize(h2);
-    fill('black');
-    if(!errado){
-      text("Seja mais rápido",width/2,height/6*5);
-    }
-    if(errado){
-      text("Cuidado!",width/2,height/6*5);
-    }
-  }
-  */
-  if(tempo <= 3 && rodada < 3){
-    fill('black');
-    textSize(h2);
-    textAlign(CENTER);
-    text("Mova-se até o seu múltiplo",width/2, height/6*5);
-  }
-  if(tempo < 2 && momento != 0){
-    textSize(h1);
-    fill(0,0,0,opacidade);
-    textAlign(CENTER);
-    text("Rodada "+rodada,width/2,height/6*5-h1);
-  }
-  opacidade -= 3;
-  if(tempo == 0){
-    opacidade = 250;
   }
   
   //Personagem
-  
-  textSize(12);
-  textAlign(CENTER);
-  fill('white');
-  if(direcao == "down"){
-    text(tPers,xPers-21,yPers+17);
-  }
-  if(direcao == "left"){
-    text(tPers,xPers+6,yPers-8);
-  }
-  if(direcao == "right"){
-    text(tPers,xPers-6,yPers-8);
-  }
-  if(direcao == "up"){
-    text(tPers,xPers,yPers-8);
-  }
-  if(rodada == 0){
-    momento = 0;
-  }
-  /*if(rodada == rodadaMax){
+  //numeroEscudo();
+  /*
+  if(rodada == rodadaMax){
     tela = "pontuacao";
-  }*/
+  }
+  */
 }
 
 function keyPressed() {
@@ -1134,3 +1175,4 @@ function keyPressed() {
     resetar();
   }
 }
+/******************************/
