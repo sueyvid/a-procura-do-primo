@@ -69,11 +69,21 @@ var time = 0;
 var pontostotais = 0;
 var congratulação;
 
-
 var moeda_som;
 
+var primos = 0;
+var x,y,t;
+
+function Obj(x, y, t){
+  this.x = x;
+  this.y = y;
+  this.t = t;
+}
+
+var n_obj = 10;
+var obj = [n_obj];
+
 /********** funções iniciais **********/
-/******************************/
 function preload() {
   Educ = loadImage('assets/Rummenigge.JPG');
   Prog = loadImage('assets/Sueyvid.jpg');
@@ -174,7 +184,7 @@ function draw() {
     explicacao();
   }
 }
-/******************************/
+
 
 /********** funções de telas **********/
 /******************************
@@ -626,7 +636,6 @@ function numeroEscudo() {
 ******************************/
 
 /********** funçõoes do jogo **********/
-/******************************/
 function movimento() {
   time++;
   if(time > 5){
@@ -656,15 +665,18 @@ function desenhaObjetos() {
   image(bau, xBau-1.2*rObj, yBau-1.2*rObj, 2.4*rObj, 2.4*rObj);
   
   if(dific >= 1){
-    image(obj,xObj-1.2*rObj,yObj-1.2*rObj,2.4*rObj,2.4*rObj);
-    image(obj,xObj2-1.2*rObj,yObj2-1.2*rObj,2.4*rObj,2.4*rObj);
+    for(i = 0; i < n_obj; i++){
+      image(obj, obj[i].x-1.2*rObj, obj[i].y-1.2*rObj, 2.4*rObj, 2.4*rObj);
+    }
     
     textSize(h2);
     textAlign(CENTER);
     fill('black');
-    text(tObj, xObj, yObj+tDist);
-    text(tObj2, xObj2, yObj2+tDist);
+    for(i = 0; i < n_obj; i++){
+      text(obj[i].t, obj[i].x, obj[i].y+tDist);
+    }
   }
+  /*
   if(dific >= 2){
     fill('lightblue');
     image(obj,xObj3-1.2*rObj,yObj3-1.2*rObj,2.4*rObj,2.4*rObj);
@@ -679,6 +691,7 @@ function desenhaObjetos() {
     fill('black');
     text(tObj4, xObj4, yObj4+tDist);
   }
+  */
 }
 
 function controlePersonagem() {
@@ -794,6 +807,14 @@ function testeZona() {
   if(xVida >= xiZona && xVida <= xfZona && yVida >= yiZona && yVida <= yfZona){
     posicaovida();
   }
+  for(i = 0; i < n_obj; i++){
+    if(obj[i].x >= xiZona && obj[i].x <= xfZona && obj[i].y >= yiZona && obj[i].y <= yfZona){
+      obj[i].x = random(0+rObj, width-rObj);
+      obj[i].y = random(50+rObj, height-rObj);
+      obj[i].t = parseInt(random(1, tMaximo));
+    }
+  }
+  /*
   if(xObj >= xiZona && xObj <= xfZona && yObj >= yiZona && yObj <= yfZona){
     aleatorio();
   }
@@ -805,10 +826,21 @@ function testeZona() {
   }
   if(xObj4 >= xiZona && xObj4 <= xfZona && yObj4 >= yiZona && yObj4 <= yfZona){
     aleatorio();
-  }  
+  }
+  */
 }
 
 function testePrimo() {
+  for(i = 0; i < n_obj; i++){
+    if(obj[0].t % tPers != 0 && obj[i].t % tPers != 0){
+      primos++;
+    }
+    if(primos == n_obj-1){
+      obj[i].t = parseInt(random(1, tMaximo));
+      primos = 0;
+    }
+  }
+  /*
   if(dific == 1){
     if(!(tObj%tPers == 0 || tObj2%tPers == 0)){
       aleatorio();
@@ -823,10 +855,21 @@ function testePrimo() {
     if(!(tObj%tPers == 0 || tObj2%tPers == 0 || tObj3%tPers == 0 || tObj4%tPers == 0)){
       aleatorio();
     }
-  }  
+  }
+  */
 }
 
 function testeDistancia() {
+  for(i = 0; i < n_obj-1; i++){
+    for(j = i+1; j < n_obj; j++){
+      if(dist(obj[i].x, obj[i].y, obj[j].x, obj[j].y) < 2*rObj){
+        obj[i].x = random(0+rObj, width-rObj);
+        obj[i].y = random(50+rObj, height-rObj);
+        obj[i].t = parseInt(random(1, tMaximo));
+      }
+    }
+  }
+  /*
   if(dist(xObj, yObj, xObj2, yObj2) < 2*rObj ||
      dist(xObj, yObj, xObj3, yObj3) < 2*rObj ||
      dist(xObj, yObj, xObj4, yObj4) < 2*rObj ||
@@ -843,6 +886,7 @@ function testeDistancia() {
      dist(xObj4, yObj4, xVida, yVida) < 2*rObj){
     aleatorio();
   }
+  */
 }
 
 function colisao() {
@@ -866,6 +910,17 @@ function colisao() {
       errado = false;
       vida += 1;
     }
+    for(i = 0; i < n_obj; i++){
+      if(obj[i].t % tPers == 0 && dist(obj[i].x, obj[i].y, xPers, yPers) < rPers){
+        acertou();
+        iguais();        
+      }
+      else if(obj[i].t % tPers != 0 && dist(obj[i].x, obj[i].y, xPers, yPers) < rPers){
+        errou();
+        iguais();
+      }
+    }
+    /*
     //Objeto 1
     if(tObj%tPers == 0 && dist(xObj, yObj, xPers, yPers) < rPers){
       acertou();
@@ -908,6 +963,7 @@ function colisao() {
         iguais();
       }
     }
+    */
   }
 }
 
@@ -989,6 +1045,7 @@ function zeradirecoes() {
 }
 
 function aleatorio() {
+  /*
   xObj = random(0+rObj,width-rObj);
   yObj = random(50+rObj,height-rObj);
   tObj = parseInt(random(1,tMaximo));
@@ -1004,6 +1061,10 @@ function aleatorio() {
   xObj4 = random(0+rObj,width-rObj);
   yObj4 = random(50+rObj,height-rObj);
   tObj4 = parseInt(random(1,tMaximo));
+  */
+  for(i = 0; i < n_obj; i++){
+    obj[i] = new Obj(random(0+rObj, width-rObj),random(50+rObj, height-rObj),parseInt(random(1, tMaximo)));
+  }
 }
 
 function jogo() {
@@ -1011,6 +1072,7 @@ function jogo() {
   background('lightgreen');
   fill('#7CFC00');
   rect(0,0,width,50);
+  
   
   //valorMaximo();
   desenhaObjetos();
@@ -1027,7 +1089,7 @@ function jogo() {
   fill('red');
   circle(xInimigo,yInimigo,2*rObj,2*rObj);
   if(tempo != rodadaTempo){
-    if(dist(xPers, yPers, xInimigo, yInimigo) > 0){
+    if(dist(xPers, yPers, xInimigo, yInimigo) < 200){
       if(xInimigo > xPers){
         xInimigo-=2;
       }
@@ -1175,4 +1237,3 @@ function keyPressed() {
     resetar();
   }
 }
-/******************************/
