@@ -8,15 +8,13 @@ Para jogar acesse:
 
 ## Melhorias a serem implementadas
 
-- [x] colocar objeto que se move sozinho
-- [ ] colocar inimigos que se movem até o personagem
+- [ ] colocar objeto que se move sozinho
 - [ ] colocar o objeto primo como um personagem com um número
 
 ## Melhorias futuras
 - [ ] Ajustar bug da primeira congratulação aparecer em preto e as vezes muito em baixo
 - [ ] Colocar o gerenciamento das telas direto na parte do teclado
 - [ ] resolver paralisia infinita, quando erra
-- [ ] Pesquisar como funcionam os objetos em JS
 - [ ] Pesquisar como chamar funções passando parâmetros em JS
 
 
@@ -34,3 +32,5 @@ Para jogar acesse:
 - [x] Ajustar a distância entre os objetos
 - [x] Ajeitar quando passar de fase abrir uma nova fase
 - [x] Ajustar bug do terceiro troféu aparecer aceso
+- [x] colocar inimigos que se movem até o personagem
+- [x] Pesquisar como funcionam os objetos em JS

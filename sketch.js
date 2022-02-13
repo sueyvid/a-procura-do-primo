@@ -5,10 +5,6 @@ var widthZona = 200, heightZona = 180;
 
 var xPers = 20, yPers = 20, tPers = 2;
 var rObj = 25, rPers = 30;
-var xObj = 0, yObj = 0, tObj = 0;
-var xObj2 = 0, yObj2 = 0, tObj2 = 0;
-var xObj3 = 0, yObj3 = 0, tObj3 = 0;
-var xObj4 = 0, yObj4 = 0, tObj4 = 0;
 var xBau = -50, yBau = -50, valorBau = 0;
 var xVida = -50, yVida = -50;
 
@@ -35,9 +31,6 @@ var yCong = 500;
 
 var rodadaMax = 10; //10
 var dific = 1;
-
-var xInimigo = 500;
-var yInimigo = 500;
 
 var h1 = 32;
 var h2 = 24;
@@ -72,15 +65,21 @@ var congratulação;
 var moeda_som;
 
 var primos = 0;
-var x,y,t;
+
+function Inimigo(x,y,dir){
+  this.x = x;
+  this.y = y;
+  this.dir = dir;
+}
+var n_inimigo = 2;
+var inimigo = [n_inimigo];
 
 function Obj(x, y, t){
   this.x = x;
   this.y = y;
   this.t = t;
 }
-
-var n_obj = 10;
+var n_obj = 2;
 var obj = [n_obj];
 
 /********** funções iniciais **********/
@@ -475,10 +474,6 @@ function paralisa() {
   }
 }
 
-function aleatorizacao() {
-  porcent = parseInt(random(1,11));
-}
-
 function vidaaleatoria() {
   aleatorizacao();
   if(porcent >= probab){
@@ -636,9 +631,22 @@ function numeroEscudo() {
 ******************************/
 
 /********** funçõoes do jogo **********/
+function aleatorizacao() {
+  porcent = parseInt(random(1,11));
+}
+
+function movimento_inimigo() {
+  aleatorizacao();
+  for(i = 0; i < n_inimigo; i++){
+    if(porcent < 5){
+      inimigo[i].dir = parseInt(random(1, 9));
+    }
+  }
+}
+
 function movimento() {
   time++;
-  if(time > 5){
+  if(time > 3){
     cont++;
     time = 0;
   }
@@ -676,22 +684,6 @@ function desenhaObjetos() {
       text(obj[i].t, obj[i].x, obj[i].y+tDist);
     }
   }
-  /*
-  if(dific >= 2){
-    fill('lightblue');
-    image(obj,xObj3-1.2*rObj,yObj3-1.2*rObj,2.4*rObj,2.4*rObj);
-    
-    fill('black');
-    text(tObj3, xObj3, yObj3+tDist);
-  }
-  if(dific >= 3){
-    fill('lightblue');
-    image(obj,xObj4-1.2*rObj,yObj4-1.2*rObj,2.4*rObj,2.4*rObj);
-    
-    fill('black');
-    text(tObj4, xObj4, yObj4+tDist);
-  }
-  */
 }
 
 function controlePersonagem() {
@@ -795,6 +787,85 @@ function atributos() {
   text(rodada+" / ∞", width-20, height-20);
 }
 
+function desenhaInimigos() {
+  for(i = 0; i < n_inimigo; i++){
+    fill('red');
+    circle(inimigo[i].x,inimigo[i].y,2*rObj,2*rObj);
+  }
+  for(i = 0; i < n_inimigo; i++){
+    if(dist(xPers, yPers, inimigo[i].x, inimigo[i].y) < 200 && tempo != rodadaTempo){
+      if(inimigo[i].x > xPers){
+        inimigo[i].x-=2;
+      }
+      if(inimigo[i].y > yPers){
+        inimigo[i].y--;
+      }
+      if(inimigo[i].x < xPers){
+        inimigo[i].x+=2;
+      }
+      if(inimigo[i].y < yPers){
+        inimigo[i].y++;
+      }
+    }
+    else{
+      if(inimigo[i].dir == 1){
+        if(inimigo[i].x<width-rObj)
+          inimigo[i].x++;
+        else
+          inimigo[i].dir = 2;
+      }
+      if(inimigo[i].dir == 2){
+        if(inimigo[i].y<height-rObj)
+          inimigo[i].y++;
+        else
+          inimigo[i].dir = 3;
+      }
+      if(inimigo[i].dir == 3){
+        if(inimigo[i].x>rObj)
+          inimigo[i].x--;
+        else
+          inimigo[i].dir = 4;
+      }
+      if(inimigo[i].dir == 4){
+        if(inimigo[i].y>50+rObj)
+          inimigo[i].y--;
+        else
+          inimigo[i].dir = 5;
+      }
+      if(inimigo[i].dir == 5){
+        if(inimigo[i].x<width-rObj)
+          inimigo[i].x++;
+        if(inimigo[i].y<height-rObj)
+          inimigo[i].y++;
+      }
+      if(inimigo[i].dir == 6){
+        if(inimigo[i].y<height-rObj)
+          inimigo[i].y++;
+        if(inimigo[i].x>rObj)
+          inimigo[i].x--;
+      }
+      if(inimigo[i].dir == 7){
+        if(inimigo[i].x>rObj)
+          inimigo[i].x--;
+        if(inimigo[i].y>50+rObj)
+          inimigo[i].y--;
+      }
+      if(inimigo[i].dir == 8){
+        if(inimigo[i].y>50+rObj)
+          inimigo[i].y--;
+        if(inimigo[i].x<width-rObj)
+          inimigo[i].x++;
+      }
+      time++;
+      if(time > 60){
+        console.log("foi");
+        movimento_inimigo();
+        time = 0;
+      }
+    }
+  }
+}
+
 function testeZona() {
   xiZona = xZona-rObj;
   xfZona = widthZona+xZona+rObj;
@@ -815,17 +886,11 @@ function testeZona() {
     }
   }
   /*
-  if(xObj >= xiZona && xObj <= xfZona && yObj >= yiZona && yObj <= yfZona){
-    aleatorio();
-  }
-  if(xObj2 >= xiZona && xObj2 <= xfZona && yObj2 >= yiZona && yObj2 <= yfZona){
-    aleatorio();
-  }
-  if(xObj3 >= xiZona && xObj3 <= xfZona && yObj3 >= yiZona && yObj3 <= yfZona){
-    aleatorio();
-  }
-  if(xObj4 >= xiZona && xObj4 <= xfZona && yObj4 >= yiZona && yObj4 <= yfZona){
-    aleatorio();
+  for(i = 0; i < n_inimigo; i++){
+    if(inimigo[i].x >= xiZona && inimigo[i].x <= xfZona && inimigo[i].y >= yiZona && inimigo[i].y <= yfZona){
+      inimigo[i].x = random(0+rObj, width-rObj);
+      inimigo[i].y = random(50+rObj, height-rObj);
+    }
   }
   */
 }
@@ -840,23 +905,6 @@ function testePrimo() {
       primos = 0;
     }
   }
-  /*
-  if(dific == 1){
-    if(!(tObj%tPers == 0 || tObj2%tPers == 0)){
-      aleatorio();
-    }
-  }
-  if(dific == 2){
-    if(!(tObj%tPers == 0 || tObj2%tPers == 0 || tObj3%tPers == 0)){
-      aleatorio();
-    }
-  }
-  if(dific == 3){
-    if(!(tObj%tPers == 0 || tObj2%tPers == 0 || tObj3%tPers == 0 || tObj4%tPers == 0)){
-      aleatorio();
-    }
-  }
-  */
 }
 
 function testeDistancia() {
@@ -869,24 +917,6 @@ function testeDistancia() {
       }
     }
   }
-  /*
-  if(dist(xObj, yObj, xObj2, yObj2) < 2*rObj ||
-     dist(xObj, yObj, xObj3, yObj3) < 2*rObj ||
-     dist(xObj, yObj, xObj4, yObj4) < 2*rObj ||
-     dist(xObj2, yObj2, xObj3, yObj3) < 4*rObj ||
-     dist(xObj2, yObj2, xObj4, yObj4) < 4*rObj ||
-     dist(xObj3, yObj3, xObj4, yObj4) < 4*rObj ||
-     dist(xObj, yObj, xBau, yBau) < 2*rObj ||
-     dist(xObj2, yObj2, xBau, yBau) < 2*rObj ||
-     dist(xObj3, yObj3, xBau, yBau) < 2*rObj ||
-     dist(xObj4, yObj4, xBau, yBau) < 2*rObj ||
-     dist(xObj, yObj, xVida, yVida) < 2*rObj ||
-     dist(xObj2, yObj2, xVida, yVida) < 2*rObj ||
-     dist(xObj3, yObj3, xVida, yVida) < 2*rObj ||
-     dist(xObj4, yObj4, xVida, yVida) < 2*rObj){
-    aleatorio();
-  }
-  */
 }
 
 function colisao() {
@@ -920,50 +950,12 @@ function colisao() {
         iguais();
       }
     }
-    /*
-    //Objeto 1
-    if(tObj%tPers == 0 && dist(xObj, yObj, xPers, yPers) < rPers){
-      acertou();
-      iguais();
-    }
-    else if(tObj%tPers != 0 && dist(xObj, yObj, xPers, yPers) < rPers){
-      errou();
-      iguais();
-    }
-    //Objeto 2
-    if(tObj2%tPers == 0 && dist(xObj2, yObj2, xPers, yPers) < rPers){
-      acertou();
-      iguais();
-    }
-    else if(tObj2%tPers != 0 && dist(xObj2, yObj2, xPers, yPers) < rPers){
-      errou();
-      iguais();
-    }
-
-    if(dific >= 2){
-      //Objeto 3
-      if(tObj3%tPers == 0 && dist(xObj3, yObj3, xPers, yPers) < rPers){
-        acertou();
-        iguais();
-      }
-      else if(tObj3%tPers != 0 && dist(xObj3, yObj3, xPers, yPers) < rPers){
-        errou();
-        iguais();
-      }  
-    }
-
-    if(dific >= 3){
-      //Objeto 4
-      if(tObj4%tPers == 0 && dist(xObj4, yObj4, xPers, yPers) < rPers){
-        acertou();
-        iguais();
-      }
-      else if(tObj4%tPers != 0 && dist(xObj4, yObj4, xPers, yPers) < rPers){
+    for(i = 0; i < n_inimigo; i++){
+      if(dist(inimigo[i].x, inimigo[i].y, xPers, yPers) < rPers){
         errou();
         iguais();
       }
     }
-    */
   }
 }
 
@@ -1045,25 +1037,11 @@ function zeradirecoes() {
 }
 
 function aleatorio() {
-  /*
-  xObj = random(0+rObj,width-rObj);
-  yObj = random(50+rObj,height-rObj);
-  tObj = parseInt(random(1,tMaximo));
-  
-  xObj2 = random(0+rObj,width-rObj);
-  yObj2 = random(50+rObj,height-rObj);
-  tObj2 = parseInt(random(1,tMaximo));
-  
-  xObj3 = random(0+rObj,width-rObj);
-  yObj3 = random(50+rObj,height-rObj);
-  tObj3 = parseInt(random(1,tMaximo));
-  
-  xObj4 = random(0+rObj,width-rObj);
-  yObj4 = random(50+rObj,height-rObj);
-  tObj4 = parseInt(random(1,tMaximo));
-  */
   for(i = 0; i < n_obj; i++){
-    obj[i] = new Obj(random(0+rObj, width-rObj),random(50+rObj, height-rObj),parseInt(random(1, tMaximo)));
+    obj[i] = new Obj(random(0+rObj, width-rObj), random(50+rObj, height-rObj), parseInt(random(1, tMaximo)));
+  }
+  for(i = 0; i < n_inimigo; i++){
+    inimigo[i] = new Inimigo(random(0+rObj, width-rObj), random(50+rObj, height-rObj), parseInt(random(1, 9)));  
   }
 }
 
@@ -1072,7 +1050,6 @@ function jogo() {
   background('lightgreen');
   fill('#7CFC00');
   rect(0,0,width,50);
-  
   
   //valorMaximo();
   desenhaObjetos();
@@ -1085,25 +1062,8 @@ function jogo() {
   //texto();
   colisao();
   testeDistancia();
+  desenhaInimigos();
   
-  fill('red');
-  circle(xInimigo,yInimigo,2*rObj,2*rObj);
-  if(tempo != rodadaTempo){
-    if(dist(xPers, yPers, xInimigo, yInimigo) < 200){
-      if(xInimigo > xPers){
-        xInimigo-=2;
-      }
-      if(yInimigo > yPers){
-        yInimigo--;
-      }
-      if(xInimigo < xPers){
-        xInimigo+=2;
-      }
-      if(yInimigo < yPers){
-        yInimigo++;
-      }
-    }
-  }
   
   //Personagem
   //numeroEscudo();
